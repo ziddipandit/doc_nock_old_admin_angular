@@ -1,0 +1,152 @@
+<section class="setup_profile">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-5">
+                <img src="../../../assets/images/login.png" class="img-fluid login_icon" alt="">
+                <h3>Set up your Profile</h3>
+                <div class="form_box">
+                    <form [formGroup]="setupProfileForm" (keyup)="validateForm()">
+                        <div class="cardBox">
+                            <div class="profile_pic">
+                                <label>Profile Picture</label>
+                                <div class="outerBox">
+                                    <div class="imgBox">
+                                        <img class="profile-pic" [src]="userImage" />
+                                        <div class="upload-button" (click)="openFileSelector()">
+                                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                                        </div>
+                                        <input class="file-upload" type="file" (change)="fileChange($event)"
+                                            accept="image/*" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+                                <div *ngIf="formControls.name.touched && formControls.name.invalid">
+                                    <small class="text-danger" *ngIf="formControls.name.errors.required">
+                                        Name is required.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Email Id</label>
+                                <input type="text" class="form-control" [attr.disabled]="true"
+                                    placeholder="Enter Email Id" formControlName="email">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Location</label>
+                                        <input type="text" class="form-control" placeholder="Enter Location"
+                                            formControlName="location">
+                                        <div *ngIf="formControls.location.touched && formControls.location.invalid">
+                                            <small class="text-danger" *ngIf="formControls.location.errors.required">
+                                                Location is required.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Contact No</label>
+                                        <input type="text" class="form-control" placeholder="Enter Contact No"
+                                            formControlName="contact">
+                                        <div *ngIf="formControls.contact.touched && formControls.contact.invalid">
+                                            <small class="text-danger" *ngIf="formControls.contact.errors.required">
+                                                Contact No is required.
+                                            </small>
+                                            <small class="text-danger" *ngIf="formControls.contact.errors.pattern">
+                                                Contact No format is incorrect.
+                                            </small>
+                                            <small class="text-danger"
+                                                *ngIf="!formControls.contact.errors.pattern && formControls.contact.errors?.minlength">
+                                                Minimum length of contact no should be 10.
+                                            </small>
+                                            <small class="text-danger" *ngIf="formControls.contact.errors?.maxlength">
+                                                Maximum length of contact no should be 10.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Create Password</label>
+                                        <div class="input_box">
+                                            <input [type]="password" class="form-control" placeholder="Enter Password"
+                                                formControlName="password">
+                                            <i class="fa-solid fa-eye-slash cursor" (click)="togglePassword()"
+                                                *ngIf="password === 'password'"></i>
+                                            <i class="fa-solid fa-eye cursor" (click)="togglePassword()"
+                                                *ngIf="password === 'text'"></i>
+                                            <div *ngIf="formControls.password.touched && formControls.password.invalid">
+                                                <small class="text-danger"
+                                                    *ngIf="formControls.password.errors.required">
+                                                    New Password Is required.
+                                                </small>
+                                                <small class="text-danger"
+                                                    *ngIf="formControls.password.errors?.minlength">
+                                                    Minimum length of new password should be 6.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Confirm Password</label>
+                                        <div class="input_box">
+                                            <input [type]="confirm_password" class="form-control"
+                                                placeholder="Enter Password" formControlName="confirm_password">
+                                            <i class="fa-solid fa-eye-slash cursor" (click)="toggleConfirmPassword()"
+                                                *ngIf="confirm_password === 'password'"></i>
+                                            <i class="fa-solid fa-eye cursor" (click)="toggleConfirmPassword()"
+                                                *ngIf="confirm_password === 'text'"></i>
+                                            <div
+                                                *ngIf="formControls.confirm_password.touched && formControls.confirm_password.invalid">
+                                                <small class="text-danger"
+                                                    *ngIf="formControls.confirm_password.errors.required">
+                                                    Confirm Password Is required.
+                                                </small>
+                                                <small class="text-danger"
+                                                    *ngIf="formControls.confirm_password.errors?.minlength">
+                                                    Minimum length of confirm password should be 6.
+                                                </small>
+                                            </div>
+                                            <div *ngIf="showNotMatchedMessage">
+                                                <small class="text-danger">
+                                                    {{ notMatchedMessage }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="submit_btn" [disabled]="isFormInvalid" (click)="submitSetupForm()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="rBox">
+                    <img src="../../../assets/images/loginLogo.png" class="img-fluid login_bg" alt="">
+                    <img src="../../../assets/images/rImg.png" class="img-fluid" alt="">
+                    <h2>Dock <span>Nock</span></h2>
+                    <p>A Communication <span>Lifeline</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,118 @@
+<section class="dashboard_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="assist_box">
+                    <div class="title">
+                        <h4>Account Settings</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="account_tab_box">
+                    <button type="button" [ngClass]="{'active': selectedTab == 1}" (click)="toggleSelectedTab(1)">Profile Setting</button>
+                    <button type="button" class="change_pass" [ngClass]="{'active': selectedTab == 2}" (click)="toggleSelectedTab(2)" >Change Password</button>
+                </div>
+            </div>
+        </div>
+        <div class="profile_setting">
+            <div class="cardBox "  [ngClass]="{'d-block': selectedTab == 1, 'd-none': selectedTab == 2}">
+                <form [formGroup]="accountSettingForm">
+                    <div class="profile_pic">
+                        <label>Profile Picture</label>
+                        <div class="imgBox">
+                            <img class="profile-pic" [src]="userImage" />
+                            <div class="upload-button" (click)="openFileSelector()">
+                                <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                            </div>
+                            <input class="file-upload" type="file" accept="image/*" (change)="fileChange($event)" formControlName="image"/>
+                        </div>
+                    </div>
+        
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="">Name</label>
+                                <input type="text" class="form-control" placeholder="Even Jordan" formControlName="name">
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="">Email Id</label>
+                                <input type="email" class="form-control" placeholder="evan@gmail.com" [attr.disabled]="true" formControlName="email" >
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="email" class="form-control" placeholder="Password" formControlName="password" >
+                            </div> -->
+        
+                            <div class="pay_submit_box">
+                                <button type="button"  class="cancel_btn"> Cancel </button>
+                                <button type="button" (click)="updateAccount()" [disabled]="accountSettingForm.invalid" class="save_btn"> Save Changes </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+
+            <div class="cardBox change_pass_sec" [ngClass]="{'d-block': selectedTab == 2, 'd-none': selectedTab == 1}">
+                <form [formGroup]="changePasswordForm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="">Old Password</label>
+                                <input type="password" class="form-control" placeholder="Old Password" formControlName="oldPassword">
+                                <div *ngIf="formControls.oldPassword.touched && formControls.oldPassword.invalid">
+                                    <small class="text-danger" *ngIf="formControls.oldPassword.errors.required">
+                                        Old Password Is required.
+                                    </small>
+                                    <small class="text-danger" *ngIf="formControls.oldPassword.errors?.minlength">
+                                    Minimum length of old password should be 6.
+                                    </small>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="">New Password</label>
+                                <input type="password" (keyup)="validatePassword()" class="form-control" placeholder="New Password" formControlName="newPassword" >
+                                <div *ngIf="formControls.newPassword.touched && formControls.newPassword.invalid">
+                                    <small class="text-danger" *ngIf="formControls.newPassword.errors.required">
+                                        New Password Is required.
+                                    </small>
+                                    <small class="text-danger" *ngIf="formControls.newPassword.errors?.minlength">
+                                    Minimum length of new password should be 6.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Confirm Password</label>
+                                <input type="password" (keyup)="validatePassword()" class="form-control" placeholder="Confirm Password" formControlName="confirm_password" >
+                                <div *ngIf="formControls.confirm_password.touched && formControls.confirm_password.invalid">
+                                    <small class="text-danger" *ngIf="formControls.confirm_password.errors.required">
+                                        Confirm Password Is required.
+                                    </small>
+                                    <small class="text-danger" *ngIf="formControls.confirm_password.errors?.minlength">
+                                    Minimum length of confirm password should be 6.
+                                    </small>
+                                </div>
+                                <div *ngIf="showNotMatchedMessage">
+                                    <small class="text-danger">
+                                        {{ notMatchedMessage }}
+                                    </small>
+                                </div>
+                            </div>
+        
+                            <div class="pay_submit_box">
+                                <button type="button"  class="cancel_btn"> Cancel </button>
+                                <button type="button" (click)="updatePassword()" [disabled]="submitDisabled" class="save_btn"> Save Changes </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</section>

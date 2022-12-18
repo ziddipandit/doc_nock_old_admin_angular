@@ -1,0 +1,193 @@
+<section class="chat_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="assist_box">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="chat-tab" type="button" [ngClass]="{'active': selectedTab == 1}" (click)="toggleSelectedTab(1)">Chat</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link fax" type="button" [ngClass]="{'active': selectedTab == 2}" (click)="toggleSelectedTab(2)">Fax</button>
+                        </li>
+                    </ul>
+                    <div class="form-group">
+                        <input type="text" placeholder="Search" class="form-control">
+                        <i class="fa-solid fa-search"></i>
+                    </div>
+      
+                    <div class="form-group status">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select Assisted Living</option>
+                            <option value="1">Assisted A</option>
+                            <option value="2">Assisted B</option>
+                            <option value="3">Assisted C</option>
+                        </select>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+      
+                    <div class="form-group location">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select Physician</option>
+                            <option value="1">Physician A</option>
+                            <option value="2">Physician B</option>
+                            <option value="3">Physician C</option>
+                        </select>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+
+                    <div class="form-group location">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Select Nurse</option>
+                            <option value="1">Nurse A</option>
+                            <option value="2">Nurse B</option>
+                            <option value="3">Nurse C</option>
+                        </select>
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chat_box" [ngClass]="{'d-block': selectedTab == 1, 'd-none': selectedTab == 2}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="innerBox">
+                                <div class="chat_list">
+                                    <div class="nav flex-column nav-pills" *ngFor="let chatNames of userNameArray">
+                                    
+                                        <button class="nav-link " type="button">{{chatNames | titlecase}}</button>
+                                       
+                                    </div>
+                                </div>
+                                <div class="chat_desc">
+                                    <div class="tab-content" id="v-pills-tabContent">
+                                        <div class="tab-pane fade show active">
+                                          <h4 class="profile_title">{{username}}</h4>
+                                          <div class="content_box">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="sender_box">
+                                                        <div class="imgBox">
+                                                            <img src="../../../../assets/images/profile-img.jpg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div class="text_box">
+                                                            <h6>Tue, 20:18</h6>
+                                                            <div class="text_inner_box arrow-left">
+                                                                <p><span>Hey Christina! </span>Can you let me know about Mr. Peter? What is need to be done?</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+
+                                                    <div class="receiver_box">
+                                                        <div class="imgBox">
+                                                            <img src="../../../../assets/images/profile-img.jpg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div class="text_box">
+                                                            <h6>Tue, 20:18</h6>
+                                                            <div class="text_inner_box arrow-left">
+                                                                <p><span>Hi! Okay, </span> I will let you know in sometime.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    
+
+                                                    <div class="receiver_box">
+                                                        <div class="imgBox">
+                                                            <img src="../../../../assets/images/profile-img.jpg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div class="text_box">
+                                                            <h6>Tue, 20:18</h6>
+                                                            <div class="text_inner_box arrow-left">
+                                                                <p><span>Hi! Okay, </span> I will let you know in sometime.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="voice_box">
+                                                        <div class="imgBox">
+                                                            <img src="../../../../assets/images/profile-img.jpg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div class="text_box">
+                                                            <h6>Tue, 20:18</h6>
+                                                            <div class="text_inner_box arrow-left">
+                                                                <a href="javascript:void(0)"><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 30 30">
+                                                                    <g id="Group_1264" data-name="Group 1264" transform="translate(-511 -357)">
+                                                                      <circle id="Ellipse_449" data-name="Ellipse 449" cx="15" cy="15" r="15" transform="translate(511 357)" fill="#64bd05"/>
+                                                                      <path id="Polygon_2" data-name="Polygon 2" d="M6.336,2.5a2,2,0,0,1,3.328,0l4.263,6.394A2,2,0,0,1,12.263,12H3.737A2,2,0,0,1,2.073,8.891Z" transform="translate(533 364) rotate(90)" fill="#fff"/>
+                                                                    </g>
+                                                                  </svg></a>
+                                                                  <img src="../../../../assets/images/voice_frequnecy.png" class="img-fluid" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                  
+                                                    
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fax_box" [ngClass]="{'d-block': selectedTab == 2, 'd-none': selectedTab == 1}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="innerBox">
+                                <div class="chat_list">
+                                    <div class="nav flex-column nav-pills" >
+                                        <button class="nav-link " type="button">Benny McGee, Linda Hudson</button>
+                                        <button class="nav-link active" type="button">Scott Taylor, Cristina Romero</button>
+                                        <button class="nav-link" type="button">Cristina, Sherry Mckinney</button>
+                                        <button class="nav-link" type="button" >Andy Wells, Todd Nelson</button>
+                                        <button class="nav-link" type="button" >Lillian Morgan, Taylor Owens</button>
+                                        <button class="nav-link" type="button" >Benny McGee, Linda Hudson</button>
+                                        <button class="nav-link" type="button" >Cristina, Sherry Mckinney</button>
+                                        <button class="nav-link" type="button" >Andy Wells, Todd Nelson</button>
+                                        <button class="nav-link" type="button" >Lillian Morgan, Taylor Owens</button>
+                                        <button class="nav-link" type="button" >Andy Wells, Todd Nelson</button>
+                                        <button class="nav-link" type="button" >Lillian Morgan, Taylor Owens</button>
+                                    </div>
+                                </div>
+                                <div class="chat_desc">
+                                    <div class="tab-content" id="v-pills-tabContent">
+                                        <div class="tab-pane fade show active">
+                                          <h4 class="profile_title">Scott Taylor, Cristina Romero</h4>
+                                          <div class="content_box">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="sender_box">
+                                                        <div class="imgBox">
+                                                            <img src="../../../../assets/images/profile-img.jpg" class="img-fluid" alt="">
+                                                        </div>
+                                                        <div class="text_box">
+                                                            <h6>Tue, 20:18</h6>
+                                                            <div class="text_inner_box arrow-left">
+                                                                <img src="../../../../assets/images/fax_docs2.png" class="imf-fluid" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

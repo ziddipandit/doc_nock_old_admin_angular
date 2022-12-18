@@ -1,0 +1,51 @@
+<section class="login_section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-5">
+                <img src="../../../assets/images/login.png" class="img-fluid login_icon" alt="">
+                <h3>Login</h3>
+                <div class="form_box">
+                    <form [formGroup]="loginForm">
+                        <div class="form-group">
+                            <label for="" class="form-label">Email Address</label>
+                            <input type="text" class="form-control"  placeholder="name@gmail.com" formControlName="email">
+                            <div *ngIf="formControls.email.touched && formControls.email.invalid">
+                                <small class="text-danger" *ngIf="formControls.email.errors.required">
+                                    Email is required.
+                                </small>
+                                <small class="text-danger" *ngIf="formControls.email.errors.email">
+                                    Email format is invalid.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="form-label">Password</label>
+                            <div class="input_box">
+                                <input [type]="password" class="form-control"  placeholder="*********" formControlName="password">
+                                <i class="fa-solid fa-eye-slash cursor" (click)="togglePassword()" *ngIf="password === 'password'"></i>
+                                <i class="fa-solid fa-eye cursor" (click)="togglePassword()" *ngIf="password === 'text'"></i>
+                                <div *ngIf="formControls.password.touched && formControls.password.invalid">
+                                    <small class="text-danger" *ngIf="formControls.password.errors.required">
+                                        Password Is required.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <p><a [routerLink]="['/forgot-password']">Forgot Password?</a></p>
+  
+                        <button class="login_btn" [disabled]="loginForm.invalid" (click)="submitLoginForm()">Login</button>
+                    </form>
+                </div>
+            </div>
+  
+            <div class="col-md-5">
+                <div class="rBox">
+                    <img src="../../../assets/images/loginLogo.png" class="img-fluid login_bg" alt="">
+                    <!-- <img src="../../../assets/images/loginLogo.png" class="img-fluid" alt=""> -->
+                    <!-- <h2>Dock <span>Nock</span></h2>
+                    <p>A Communication <span>Lifeline</span></p> -->
+                </div>
+            </div>
+        </div>
+    </div> 
+  </section>

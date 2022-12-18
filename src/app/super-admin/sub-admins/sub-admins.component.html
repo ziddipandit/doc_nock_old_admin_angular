@@ -1,0 +1,269 @@
+<section class="dashboard_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="assist_box">
+          <div class="inner_box">
+            <div class="title sub_admin_title">
+              <h4>Sub Admin</h4>
+            </div>
+            <div class="form-group form_box">
+              <input type="text" placeholder="Search" class="form-control" (keyup)="applyFilter($event)">
+              <i class="fa-solid fa-search"></i>
+            </div>
+
+
+          </div>
+
+          <div class="add_btn nurse_box">
+            <a (click)="addSubadmin()"><i class="fas fa-plus"></i> Add Sub Admin</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive border-1 assist_table">
+          <table mat-table [dataSource]="dataSource" matSort class="table mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="imgBox">
+                  <img *ngIf="!element.image || element.image == 'null'" src="../../assets/images/user.png"
+                    class="img-fluid" alt="">
+                  <img *ngIf="element.image && element.image != 'null'" [src]=element.image class="img-fluid">
+                  <span>{{element.name}}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Email </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="contact">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Contact </th>
+              <td mat-cell *matCellDef="let element"> {{element.contact}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="location">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Location </th>
+              <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="nurshing_home_status">
+                  <a class="cursor" *ngIf="element.status==0" class="active"><span></span> In-Active</a>
+                  <a class="cursor" *ngIf="element.status==1" class="active"><span></span> Active</a>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let element">
+                <div class="action_btn">
+                  <a class="edit_btn" type="button" data-bs-toggle="modal" data-bs-target="#editModal"
+                    (click)="openEditDialog(element._id)"><i class="fa-solid fa-pen"></i></a>
+                  <a class="trash_btn" ype="button" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                    (click)="openDeleteDialog(element._id)"><i class="fa-solid fa-trash-can"></i></a>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                No records found.
+              </td>
+            </tr>
+          </table>
+         
+        </div>
+        <div class="page_box">
+          <mat-paginator [length]="length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #subadminDialog>
+  <div class="edit_nurshHome_modal">
+    <div id="editModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Edit Sub Admin
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDialog()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="subadminForm">
+              <div class="cardBox">
+                <div class="profile_pic">
+                  <label>Profile Picture</label>
+                  <div class="outerBox">
+                    <div class="imgBox">
+                      <img class="profile-pic" [src]="userImage" />
+                      <div class="upload-button" (click)="openFileSelector()">
+                        <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+                      </div>
+                      <input class="file-upload" type="file" (change)="fileChange($event)" accept="image/*" />
+                    </div>
+                    <a class="edit_icon" (click)="openFileSelector()" *ngIf="mode == 'Edit'"><i
+                        class="fa-solid fa-pen"></i></a>
+                    <a class="remove_icon" *ngIf="mode == 'Edit' && userImage" (click)="removeProfilePic()">Remove</a>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="">Name</label>
+                  <input type="text" class="form-control" placeholder="Enter Name" formControlName="name">
+                  <div *ngIf="formControls.name.touched && formControls.name.invalid">
+                    <small class="text-danger" *ngIf="formControls.name.errors.required">
+                      Name is required.
+                    </small>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Email Id</label>
+                      <input type="email" class="form-control" value="" placeholder="Email Id" formControlName="email">
+                      <div *ngIf="formControls.email.touched && formControls.email.invalid">
+                        <small class="text-danger" *ngIf="formControls.email.errors.required">
+                          Email is required.
+                        </small>
+                        <small class="text-danger" *ngIf="formControls.email.errors.email">
+                          Email format is invalid.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Location</label>
+                      <input type="text" class="form-control" placeholder="Location Name" formControlName="location">
+                      <div *ngIf="formControls.location.touched && formControls.location.invalid">
+                        <small class="text-danger" *ngIf="formControls.location.errors.required">
+                          Location is required.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Contact No</label>
+                      <input type="text" class="form-control" placeholder="Contact No" formControlName="contact">
+
+                      <div *ngIf="formControls.contact.touched && formControls.contact.invalid">
+                        <small class="text-danger" *ngIf="formControls.contact.errors.required">
+                          Contact is required.
+                        </small>
+                        <small class="text-danger" *ngIf="formControls.contact.errors.pattern">
+                          Contact No format is incorrect.
+                        </small>
+                        <small class="text-danger"
+                          *ngIf="!formControls.contact.errors.pattern && formControls.contact.errors?.minlength">
+                          Minimum length of contact no should be 10.
+                        </small>
+                        <small class="text-danger" *ngIf="formControls.contact.errors?.maxlength">
+                          Maximum length of contact no should be 10.
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="pay_submit_box">
+            <button type="button" class="cancel_btn" data-bs-dismiss="modal" (click)="closeDialog()">
+              Cancel
+            </button>
+            <button *ngIf="mode == 'Add'" type="button" class="pay_submit_btn" [disabled]="subadminForm.invalid"
+              (click)="submitSubadmin()">
+              Add
+            </button>
+            <button *ngIf="mode == 'Edit'" type="button" class="pay_submit_btn" [disabled]="subadminForm.invalid"
+              (click)="updateSubadmin()">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<ng-template #deleteDialog>
+  <div class="delete_nurshHome_modal">
+    <div id="deleteModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="trash_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.5 38.167">
+                <g id="Icon_feather-trash-2" data-name="Icon feather-trash-2" transform="translate(-3.75 -2.25)">
+                  <path id="Path_405" data-name="Path 405" d="M4.5,9h33" transform="translate(0 1.333)" fill="none"
+                    stroke="#e71f00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+                  <path id="Path_406" data-name="Path 406"
+                    d="M33.167,10.333V36A3.667,3.667,0,0,1,29.5,39.667H11.167A3.667,3.667,0,0,1,7.5,36V10.333m5.5,0V6.667A3.667,3.667,0,0,1,16.667,3H24a3.667,3.667,0,0,1,3.667,3.667v3.667"
+                    transform="translate(0.667 0)" fill="none" stroke="#e71f00" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-width="1.5" />
+                  <path id="Path_407" data-name="Path 407" d="M15,16.5v11" transform="translate(2.333 3)" fill="none"
+                    stroke="#e71f00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+                  <path id="Path_408" data-name="Path 408" d="M21,16.5v11" transform="translate(3.667 3)" fill="none"
+                    stroke="#e71f00" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+                </g>
+              </svg>
+            </span>
+            <button type="button" class="btn-close" (click)="closeDialog()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="cardBox">
+              <p>
+                Are you sure you want to delete this Sub Admin details?
+              </p>
+            </div>
+          </div>
+          <div class="pay_submit_box">
+            <button type="button" class="deny_btn" (click)="closeDialog()">
+              No
+            </button>
+            <button type="button" class="deny_btn accept_btn" (click)="confirmDelete()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
